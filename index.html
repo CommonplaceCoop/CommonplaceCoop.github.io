@@ -23,7 +23,35 @@
             Learn More!
           </a>
         </div>
+        <div> <!--Email list contact form-->
+          <form
+            id="email-form"
+            method="POST"
+            action="https://script.google.com/macros/s/AKfycbyX3gWcNAN3XcjfSzGQ-AG0Z45QcbL-pttB_8-ItoBmjHuvhBsexoERe5RmVKPfYw2a/exec">
+            <input name="Email" type="email" placeholder="myemail@email.com" required>
+            <input name="Name" type="text" placeholder="Name" required>
+            <button type="submit">Send</button>
+          </form>
+        </div>
       </div>
     </main>
+    <script>
+      document.getElementById('email-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch(this.action, {
+          method: 'POST', 
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Email info successfully submitted')
+        })
+        .catch(error => console.error('Error:', error));
+      });
+
+    </script>
   </body>
 </html>
