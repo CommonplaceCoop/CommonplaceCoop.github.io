@@ -23,24 +23,20 @@
             Learn More!
           </a>
         </div>
-        <!--Email list contact form-->
-        <div class="text-center border-t border-zinc-900" id="email-container"> 
-          <p class="pt-4 text-xl font-semibold">Join Our Email List!</p>
+        <div> <!--Email list contact form-->
           <form
-            class="p-5 flex flex-col"
+            id="email-form"
             method="POST"
             action="https://script.google.com/macros/s/AKfycbyX3gWcNAN3XcjfSzGQ-AG0Z45QcbL-pttB_8-ItoBmjHuvhBsexoERe5RmVKPfYw2a/exec">
-            <label class="block text-lg font-bold">Email:</label>
-            <input class="mt-2 mb-2 py-1 px-2 border rounded text-slate-900" name="Email" type="email" placeholder="myemail@email.com" required>
-            <label class="block text-lg font-bold">Name:</label>
-            <input class="mt-2 mb-6 py-1 px-2 border rounded text-slate-900" name="Name" type="text" placeholder="Name" required>
-            <button class="bg-transparent hover:bg-zinc-600 text-white font-semibold hover:text-white py-2 px-4 border border-slate-500 hover:border-transparent rounded" type="submit">Send</button>
+            <input name="Email" type="email" placeholder="myemail@email.com" required>
+            <input name="Name" type="text" placeholder="Name" required>
+            <button type="submit">Send</button>
           </form>
         </div>
       </div>
     </main>
     <script>
-      document.querySelector('form').addEventListener('submit', function(e) {
+      document.getElementById('email-form').addEventListener('submit', function(e) {
         e.preventDefault();
 
         const formData = new FormData(this);
@@ -51,21 +47,7 @@
         })
         .then(response => response.json())
         .then(data => {
-          console.log('Email info successfully submitted');
-          const successMessage = document.createElement('p');
-          successMessage.innerText = "Email submitted!";
-          successMessage.className = 'bg-zinc-700 text-lg text-white';
-
-          const container = document.getElementById('email-container');
-          container.appendChild(successMessage);
-
-          document.querySelector('form').reset();
-
-          setTimeout(() => {
-            successMessage.remove();
-          }, 6000);
-
-          document.querySelector('form').reset();
+          console.log('Email info successfully submitted')
         })
         .catch(error => console.error('Error:', error));
       });
