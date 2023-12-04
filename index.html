@@ -36,8 +36,7 @@
             
             <label class="pl-1 mb-1 text-base font-medium">Name</label>
             <input class="mb-8 py-2 px-4 w-full rounded bg-zinc-800 focus:outline-none focus:ring focus:ring-indigo-400" name="Name" type="text" placeholder="Name" required>
-            <p id="success-El"></p>
-            <button class="self-end bg-indigo-500 hover:bg-indigo-600 text-white font-semibold active:bg-indigo-500 py-2 px-6 w-full md:w-max rounded" type="submit">Join</button>
+            <button id="join-button" class="self-end bg-indigo-500 hover:bg-indigo-600 text-white font-semibold active:bg-indigo-500 py-2 px-6 w-full md:w-max rounded" type="submit">Join</button>
           </form>
         </div>
       </div>
@@ -45,6 +44,9 @@
     <script>
       document.querySelector('form').addEventListener('submit', function(e) {
         e.preventDefault();
+
+        const joinButton = document.getElementById('join-button');
+        joinButton.innerText = 'Joining...';
 
         const formData = new FormData(this);
         fetch(this.action, {
@@ -54,18 +56,9 @@
         .then(response => response.json())
         .then(data => {
           console.log('Email info successfully submitted');
-          const successMessage = document.createElement('p');
-          successMessage.innerText = "Email submitted! Thank you! :)";
-          successMessage.className = 'bg-zinc-700 text-lg text-white';
-
-          const successEl = document.getElementById('success-El');
-          successEl.appendChild(successMessage);
-
-          
-
-          setTimeout(() => {
-            successMessage.remove();
-          }, 6000);
+          joinButton.innerText = 'Joined!';
+          joinButton.disabled = true;
+          joinButton.className = 'self-end bg-zinc-500 text-white font-semibold py-2 px-6 w-full md:w-max rounded';
 
           document.querySelector('form').reset();
         })
