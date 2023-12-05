@@ -11,10 +11,10 @@
     </style>
   </head>
   <body>
-    <main class="flex flex-col gap-16 items-center justify-center p-4 md:p-0 w-screen h-screen">
+    <main class="flex flex-col gap-16 items-center justify-center p-4 md:p-8 w-screen h-100vh">
       <img src="commonplace.png" alt="Commonplace Cooperative" class="w-3/4 md:w-2/5" />
-      <div class="bg-zinc-700 overflow-hidden w-full md:w-2/5 rounded-md shadow-lg text-lg text-white">
-        <div class="p-8">
+      <div class="bg-zinc-700 overflow-visible w-full md:w-2/5 rounded-md shadow-lg text-lg text-white">
+        <div class="p-4 md:p-8">
           <p class="mb-4">Our cornerstone project is coming soon: <strong>a social media platform built to help local people</strong> to support one another &#38; improve their shared community.</p>
           <p>We&#8217;re improving on technology pioneered by social networks, crowdfunding platforms, and local forums. <strong>But it&#8217;s not a tech company&#8212;it&#8217;s a platform cooperative, and if you&#8217;re on it, you own it.</strong></p>
         </div>
@@ -23,7 +23,47 @@
             Learn More!
           </a>
         </div>
+        <div class="text-center border-t border-b border-zinc-900" id="email-container"> <!--Email list contact form-->
+          <p class="pt-4 text-2xl font-semibold">Join the Mailing List</p>
+          <form
+            class="p-4 md:p-8 flex flex-col items-start"
+            id="email-form"
+            method="POST"
+            autocomplete="off"
+            action="https://script.google.com/macros/s/AKfycbyX3gWcNAN3XcjfSzGQ-AG0Z45QcbL-pttB_8-ItoBmjHuvhBsexoERe5RmVKPfYw2a/exec">
+            <label class="pl-1 mb-1 text-base font-medium">Email</label>
+            <input class="mb-4 py-2 px-4 w-full rounded bg-zinc-800 focus:outline-none focus:ring focus:ring-indigo-400" name="Email" type="email" placeholder="myemail@email.com" required>
+            
+            <label class="pl-1 mb-1 text-base font-medium">Name</label>
+            <input class="mb-8 py-2 px-4 w-full rounded bg-zinc-800 focus:outline-none focus:ring focus:ring-indigo-400" name="Name" type="text" placeholder="Name" required>
+            <button id="join-button" class="self-end bg-indigo-500 hover:bg-indigo-600 text-white font-semibold active:bg-indigo-500 py-2 px-6 w-full md:w-max rounded" type="submit">Join</button>
+          </form>
+        </div>
       </div>
     </main>
+    <script>
+      document.querySelector('form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const joinButton = document.getElementById('join-button');
+        joinButton.innerText = 'Joining...';
+
+        const formData = new FormData(this);
+        fetch(this.action, {
+          method: 'POST', 
+          body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+          console.log('Email info successfully submitted');
+          joinButton.innerText = 'Joined!';
+          joinButton.disabled = true;
+          joinButton.className = 'self-end bg-zinc-500 text-white font-semibold py-2 px-6 w-full md:w-max rounded';
+
+          document.querySelector('form').reset();
+        })
+        .catch(error => console.error('Error:', error));
+      });
+    </script>
   </body>
 </html>
